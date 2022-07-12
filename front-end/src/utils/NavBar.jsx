@@ -1,8 +1,6 @@
 import React from 'react';
 
-
 function ClientNavBar() {
-
   return (
     <nav>
       <div>
@@ -27,7 +25,7 @@ function ClientNavBar() {
         <p
           data-testid="customer_products__element-navbar-user-full-name"
         >
-         Seu nome
+          Seu nome
         </p>
 
         <button

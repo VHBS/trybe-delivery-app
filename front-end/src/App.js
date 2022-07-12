@@ -1,7 +1,8 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+
 import './App.css';
-import Login from './pages/Login/Login';
+import Login from './pages/Login/login';
 import Register from './pages/Register/Register';
 
 function App() {

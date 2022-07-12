@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 
 function Register() {
-
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(true);
 
@@ -18,10 +15,10 @@ function Register() {
   function enableButton() {
     const minimumPassword = 6;
     const minimun = 12;
-    const emailValid = emailValidated(); 
+    const emailValid = emailValidated();
     if (emailValid && password.length >= minimumPassword && name.length >= minimun) {
       setValid(false);
-    }else{
+    } else {
       setValid(true);
     }
   }
@@ -65,7 +62,7 @@ function Register() {
       <button
         data-testid="common_register__button-register"
         type="button"
-        disabled={ loginValidated}
+        disabled={ loginValidated }
       >
         Cadastrar
       </button>
@@ -73,7 +70,7 @@ function Register() {
       <p data-testid="common_register__element-invalid_register">error</p>
 
     </div>
-  )
+  );
 }
 
 export default Register;
