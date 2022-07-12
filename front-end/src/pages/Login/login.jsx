@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState();
@@ -24,8 +25,8 @@ function Login() {
       <h3>login</h3>
       <input
         data-testid="common_login__input-email"
-        type="text"
-        valeu={ email }
+        type="email"
+        value={ email }
         onChange={ ({ target }) => {
           setEmail(target.value);
           passwordValidated();
@@ -36,7 +37,7 @@ function Login() {
       <input
         data-testid="common_login__input-password"
         type="password"
-        valeu={ password }
+        value={ password }
         onChange={ ({ target }) => {
           setPassword(target.value);
           passwordValidated();
@@ -51,12 +52,14 @@ function Login() {
         Entrar
       </button>
 
-      <button
-        data-testid="common_login__button-register"
-        type="button"
-      >
-        Registrar
-      </button>
+      <Link to="/register">
+        <button
+          data-testid="common_login__button-register"
+          type="button"
+        >
+          Registrar
+        </button>
+      </Link>
     </div>
   );
 }
