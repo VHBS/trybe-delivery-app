@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Login() {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(false);
 
@@ -25,6 +25,7 @@ function Login() {
       <input
         data-testid="common_login__input-email"
         type="email"
+        placeholder="email"
         value={ email }
         onChange={ ({ target }) => {
           setEmail(target.value);
@@ -36,6 +37,7 @@ function Login() {
       <input
         data-testid="common_login__input-password"
         type="password"
+        placeholder="password"
         value={ password }
         onChange={ ({ target }) => {
           setPassword(target.value);
@@ -59,6 +61,9 @@ function Login() {
           Registrar
         </button>
       </Link>
+      {console.log(loginValidated)}
+      {!loginValidated ? <p common_login__element-invalid-email>E-mail inválido</p>
+        : null}
     </div>
   );
 }
