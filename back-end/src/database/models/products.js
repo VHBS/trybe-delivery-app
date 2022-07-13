@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
     name: {
       type: DataTypes.STRING,
@@ -18,15 +18,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: {
       allowNull: false,
-      type: Sequelize.DECIMAL(4, 2)
+      type: DataTypes.DECIMAL(4, 2)
     },
     urlImage: {
       allowNull: false,
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     }
   }, {
     sequelize,
-    modelName: 'products',
+    modelName: 'Product',
+    tableName: 'products',
     underscored: true,
     timestamps: false,
   });
