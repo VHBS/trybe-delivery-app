@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -6,13 +6,13 @@ function Register() {
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(true);
 
-  function emailValidated() {
+  const emailValidated = useCallback(() => {
     const regex = /\S+@\S+\.\S+/;
     const valid = regex.test(email);
     return valid;
-  }
+  }, [email]);
 
-  function enableButton() {
+  const enableButton = useCallback(() => {
     const minimumPassword = 6;
     const minimun = 12;
     const emailValid = emailValidated();
@@ -21,7 +21,7 @@ function Register() {
     } else {
       setValid(true);
     }
-  }
+  }, [emailValidated, name.length, password.length]);
 
   useEffect(() => {
     enableButton();

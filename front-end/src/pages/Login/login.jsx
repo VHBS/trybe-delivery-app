@@ -12,10 +12,13 @@ function Login() {
     return valid;
   }
 
-  function passwordValidated() {
-    const minimum = 5;
-    if (password.length >= minimum) {
+  function passwordValidated(pass) {
+    const minimum = 6;
+    setPassword(pass);
+    if (pass.length >= minimum) {
       setValid(true);
+    } else {
+      setValid(false);
     }
   }
 
@@ -29,7 +32,7 @@ function Login() {
         value={ email }
         onChange={ ({ target }) => {
           setEmail(target.value);
-          passwordValidated();
+          emailValidated();
         } }
       />
 
@@ -40,15 +43,14 @@ function Login() {
         placeholder="password"
         value={ password }
         onChange={ ({ target }) => {
-          setPassword(target.value);
-          passwordValidated();
+          passwordValidated(target.value);
         } }
       />
 
       <button
         data-testid="common_login__element-invalid-email"
         type="button"
-        disabled={ !loginValidated || !emailValidated() }
+        disabled={ !emailValidated() || !loginValidated }
       >
         Entrar
       </button>
@@ -61,6 +63,7 @@ function Login() {
           Registrar
         </button>
       </Link>
+      {console.log(emailValidated())}
       {console.log(loginValidated)}
       {!loginValidated ? <p common_login__element-invalid-email>E-mail inválido</p>
         : null}
