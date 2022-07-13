@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "eslint-config-trybe-frontend": "1.2.3",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-redux": "^4.0.0",
     "eslint-plugin-sonarjs": "^0.13.0",
     "react-router-prop-types": "^1.0.5",
