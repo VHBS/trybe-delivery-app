@@ -28,7 +28,7 @@ function Login() {
 
   return (
     <div>
-      <h3>login</h3>
+      <h3>Login</h3>
       <input
         name="email"
         data-testid="common_login__input-email"
@@ -56,12 +56,12 @@ function Login() {
       <Link to="../customer/products">
 
         <button
-          data-testid="common_login__element-invalid-email"
+          data-testid="common_login__button-login"
           type="button"
           disabled={ !emailValidated() || !loginValidated }
           onClick={ setLocalStorage }
         >
-          Entrar
+          Login
         </button>
       </Link>
 
@@ -70,7 +70,7 @@ function Login() {
           data-testid="common_login__button-register"
           type="button"
         >
-          Registrar
+          Ainda não tenho conta
         </button>
       </Link>
       {!loginValidated ? <p common_login__element-invalid-email>E-mail inválido</p>
