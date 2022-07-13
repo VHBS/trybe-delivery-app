@@ -40,6 +40,15 @@ function ProductsCard() {
           Adicionar
         </button>
       </li>
+      <li>
+        <button
+          type="button"
+          value="rm-btn"
+          data-testid="customer_products__button-card-rm-item-"
+        >
+          Remover
+        </button>
+      </li>
     </div>
   ));
 

@@ -22,10 +22,15 @@ function Login() {
     }
   }
 
+  function setLocalStorage() {
+    localStorage.setItem('user', JSON.stringify({ email }));
+  }
+
   return (
     <div>
       <h3>login</h3>
       <input
+        name="email"
         data-testid="common_login__input-email"
         type="email"
         placeholder="email"
@@ -38,6 +43,7 @@ function Login() {
 
       <h3>Senha</h3>
       <input
+        name="password"
         data-testid="common_login__input-password"
         type="password"
         placeholder="password"
@@ -47,13 +53,17 @@ function Login() {
         } }
       />
 
-      <button
-        data-testid="common_login__element-invalid-email"
-        type="button"
-        disabled={ !emailValidated() || !loginValidated }
-      >
-        Entrar
-      </button>
+      <Link to="../customer/products">
+
+        <button
+          data-testid="common_login__element-invalid-email"
+          type="button"
+          disabled={ !emailValidated() || !loginValidated }
+          onClick={ setLocalStorage }
+        >
+          Entrar
+        </button>
+      </Link>
 
       <Link to="/register">
         <button
@@ -63,8 +73,6 @@ function Login() {
           Registrar
         </button>
       </Link>
-      {console.log(emailValidated())}
-      {console.log(loginValidated)}
       {!loginValidated ? <p common_login__element-invalid-email>E-mail inválido</p>
         : null}
     </div>
