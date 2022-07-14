@@ -73,8 +73,9 @@ function Login() {
           Ainda não tenho conta
         </button>
       </Link>
-      {!loginValidated ? <p common_login__element-invalid-email>E-mail inválido</p>
-        : null}
+      { !loginValidated
+        ? <p data-testid="common_login__element-invalid-email">E-mail inválido</p>
+        : null }
     </div>
   );
 }
