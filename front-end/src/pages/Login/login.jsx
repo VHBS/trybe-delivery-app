@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(false);
@@ -24,8 +25,13 @@ function Login() {
     }
   }
 
-  function setLocalStorage() {
-    handleLogin(email, password);
+  async function setLocalStorage() {
+    try {
+      await handleLogin(email, password);
+      navigate('/customer/products');
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   }
 
   return (
@@ -55,17 +61,14 @@ function Login() {
         } }
       />
 
-      <Link to="../customer/products">
-
-        <button
-          data-testid="common_login__button-login"
-          type="button"
-          disabled={ !emailValidated() || !loginValidated }
-          onClick={ setLocalStorage }
-        >
-          Login
-        </button>
-      </Link>
+      <button
+        data-testid="common_login__button-login"
+        type="button"
+        disabled={ !emailValidated() || !loginValidated }
+        onClick={ setLocalStorage }
+      >
+        Login
+      </button>
 
       <Link to="/register">
         <button
@@ -75,9 +78,10 @@ function Login() {
           Ainda não tenho conta
         </button>
       </Link>
-      { !loginValidated
-        ? <p data-testid="common_login__element-invalid-email">E-mail inválido</p>
-        : null }
+
+      <p data-testid="common_login__element-invalid-email">
+        { !loginValidated && 'E-mail ou senha incorretos' }
+      </p>
     </div>
   );
 }
