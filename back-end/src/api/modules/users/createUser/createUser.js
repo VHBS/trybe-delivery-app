@@ -1,4 +1,6 @@
 const userSchema = require('../../../../utils/userValidation');
+const md5 = require('md5');
+const jwtFactory = require('../../../../utils/jwt/jwtFactory');
 
 class CreateUser {
   constructor(usersRepository) {
@@ -23,9 +25,13 @@ class CreateUser {
       return { error: 'User alredy exists', code: 409 };
     }
 
-    const user = await this.usersRepository.create({ name, email, password, role });
+    const cryptoPassword = md5(password);
 
-    return user;
+    const user = await this.usersRepository.create({ name, email, password: cryptoPassword, role }, { attributes: { exclude: ['password']}});
+
+    const token = jwtFactory().sign({ id: user.id, email, role });
+
+    return { user: { id: user.id, email, role }, token };
   }
 }
 
