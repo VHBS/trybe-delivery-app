@@ -1,23 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import useProducts from '../hooks/useProducts';
+import useProducts from '../hooks/useProducts';
 
 function ProductsCard() {
-  // const { handleProducts, products } = useProducts();
-  const [products, setProducts] = useState([]);
-  const url = 'http://localhost:3001/products';
-
+  const { handleProducts, products } = useProducts();
   useEffect(() => {
     try {
-    // handleProducts();
-      axios.get(url).then((response) => {
-        setProducts(response.data);
-      });
+      handleProducts();
     } catch (error) {
       throw new Error(error);
     }
-  }, []);
+  }, [handleProducts]);
 
   const productsMap = products.map((product) => (
     <div key={ product.id }>
