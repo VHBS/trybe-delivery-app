@@ -18,8 +18,20 @@ function AuthProvider({ children }) {
     setUser(userData);
   }
 
+  async function handleRegister(name, email, password) {
+    const { data } = await api.post('/register', {
+      name,
+      email,
+      password,
+    });
+
+    const userData = { ...data.user, token: data.token };
+    localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+  }
+
   return (
-    <AuthContext.Provider value={ { handleLogin, user } }>
+    <AuthContext.Provider value={ { handleLogin, handleRegister, user } }>
       { children}
     </AuthContext.Provider>
   );
