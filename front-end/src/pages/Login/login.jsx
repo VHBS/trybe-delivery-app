@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(false);
+  const { handleLogin } = useAuth();
 
   function emailValidated() {
     const regex = /\S+@\S+\.\S+/;
@@ -23,7 +25,7 @@ function Login() {
   }
 
   function setLocalStorage() {
-    localStorage.setItem('user', JSON.stringify({ email }));
+    handleLogin(email, password);
   }
 
   return (
