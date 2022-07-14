@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 function Register() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(true);
+  const { handleRegister } = useAuth();
 
   const emailValidated = useCallback(() => {
     const regex = /\S+@\S+\.\S+/;
@@ -14,9 +18,9 @@ function Register() {
 
   const enableButton = useCallback(() => {
     const minimumPassword = 6;
-    const minimun = 12;
+    const maximun = 12;
     const emailValid = emailValidated();
-    if (emailValid && password.length >= minimumPassword && name.length >= minimun) {
+    if (emailValid && password.length >= minimumPassword && name.length <= maximun) {
       setValid(false);
     } else {
       setValid(true);
@@ -26,6 +30,15 @@ function Register() {
   useEffect(() => {
     enableButton();
   }, [name, email, password, enableButton]);
+
+  const registerUser = async () => {
+    try {
+      await handleRegister(name, email, password);
+      navigate('/customer/products');
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 
   return (
     <div>
@@ -63,6 +76,7 @@ function Register() {
         data-testid="common_register__button-register"
         type="button"
         disabled={ loginValidated }
+        onClick={ registerUser }
       >
         Cadastrar
       </button>
