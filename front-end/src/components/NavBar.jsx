@@ -1,6 +1,8 @@
 import React from 'react';
 
 function ClientNavBar() {
+  const nameUser = JSON.parse(localStorage.getItem('user'));
+
   return (
     <nav>
       <div>
@@ -25,7 +27,7 @@ function ClientNavBar() {
         <p
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          Seu nome
+          {nameUser.name}
         </p>
 
         <button
