@@ -18,12 +18,13 @@ function ProductsCard() {
         {product.name}
       </h3>
       <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-        {product.price}
+        {product.price.replace(/\./, ',')}
       </p>
       <img
         data-testid={ `customer_products__img-card-bg-image-${product.id}` }
         src={ product.urlImage }
         alt="card-bg"
+        height="100px"
       />
       <button
         type="button"
@@ -36,6 +37,7 @@ function ProductsCard() {
         type="number"
         min="0"
         data-testid={ `customer_products__input-card-quantity-${product.id}` }
+        value="0"
       />
       <button
         type="button"

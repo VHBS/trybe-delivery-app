@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ClientNavBar() {
+  const navigate = useNavigate();
   const nameUser = JSON.parse(localStorage.getItem('user'));
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate('/');
+  };
 
   return (
     <nav>
@@ -33,6 +40,7 @@ function ClientNavBar() {
         <button
           data-testid="customer_products__element-navbar-link-logout"
           type="button"
+          onClick={ handleLogOut }
         >
           Sair
         </button>
