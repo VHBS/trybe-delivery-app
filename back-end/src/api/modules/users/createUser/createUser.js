@@ -31,7 +31,7 @@ class CreateUser {
 
     const token = jwtFactory().sign({ id: user.id, email, role });
 
-    return { user: { id: user.id, email, role }, token };
+    return { user: { id: user.id, email, role, name }, token };
   }
 }
 
