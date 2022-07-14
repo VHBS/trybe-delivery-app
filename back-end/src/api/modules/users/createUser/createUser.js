@@ -1,5 +1,5 @@
-const userSchema = require('../../../../utils/userValidation');
 const md5 = require('md5');
+const userSchema = require('../../../../utils/userValidation');
 const jwtFactory = require('../../../../utils/jwt/jwtFactory');
 
 class CreateUser {
@@ -27,7 +27,7 @@ class CreateUser {
 
     const cryptoPassword = md5(password);
 
-    const user = await this.usersRepository.create({ name, email, password: cryptoPassword, role }, { attributes: { exclude: ['password']}});
+    const user = await this.usersRepository.create({ name, email, password: cryptoPassword, role });
 
     const token = jwtFactory().sign({ id: user.id, email, role });
 
