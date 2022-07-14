@@ -9,6 +9,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(true);
   const { handleRegister } = useAuth();
+  const [userAlreadyExist, setUserAlreadyExist] = useState(false);
 
   const emailValidated = useCallback(() => {
     const regex = /\S+@\S+\.\S+/;
@@ -18,9 +19,9 @@ function Register() {
 
   const enableButton = useCallback(() => {
     const minimumPassword = 6;
-    const maximun = 12;
+    const minimun = 12;
     const emailValid = emailValidated();
-    if (emailValid && password.length >= minimumPassword && name.length <= maximun) {
+    if (emailValid && password.length >= minimumPassword && name.length >= minimun) {
       setValid(false);
     } else {
       setValid(true);
@@ -36,7 +37,8 @@ function Register() {
       await handleRegister(name, email, password);
       navigate('/customer/products');
     } catch (error) {
-      console.log(error.response.data.message);
+      setUserAlreadyExist(true);
+      console.log(error);
     }
   };
 
@@ -81,7 +83,9 @@ function Register() {
         Cadastrar
       </button>
 
-      <p data-testid="common_register__element-invalid_register">error</p>
+      <p data-testid="common_register__element-invalid_register">
+        { userAlreadyExist && 'Usuário já existe' }
+      </p>
 
     </div>
   );
