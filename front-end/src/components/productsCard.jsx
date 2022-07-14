@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ClientNavBar from '../utils/NavBar';
 
 function ProductsCard() {
   const [products, setProducts] = useState([]);
@@ -54,7 +53,6 @@ function ProductsCard() {
 
   return (
     <>
-      <ClientNavBar />
       <h1>lista todos os produtos</h1>
       {!products ? null : <ul>{productsMap}</ul>}
       <Link to="customer/checkout" />
