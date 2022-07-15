@@ -5,6 +5,7 @@ import './App.css';
 import Login from './pages/Login/login';
 import Products from './pages/Products/Products';
 import Register from './pages/Register/Register';
+import { CartProvider } from './contexts/CartContext';
 
 function App() {
   return (
@@ -12,7 +13,14 @@ function App() {
       <Route exact path="/" element={ <Navigate to="/login" /> } />
       <Route path="login" element={ <Login /> } />
       <Route path="register" element={ <Register /> } />
-      <Route path="customer/products" element={ <Products /> } />
+      <Route
+        path="customer/products"
+        element={
+          <CartProvider>
+            <Products />
+          </CartProvider>
+        }
+      />
       <Route path="customer/checkout" />
     </Routes>
   );
