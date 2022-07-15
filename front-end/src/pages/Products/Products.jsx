@@ -3,7 +3,6 @@ import CheckoutButton from '../../components/CheckoutButton';
 import ClientNavBar from '../../components/NavBar';
 import ProductsCard from '../../components/ProductsCard';
 import useProducts from '../../hooks/useProducts';
-import { CartProvider } from '../../contexts/CartContext';
 
 function Products() {
   const { handleProducts, products } = useProducts();
@@ -17,15 +16,16 @@ function Products() {
   }, [handleProducts]);
 
   return (
-    <CartProvider>
+    <>
       <ClientNavBar />
       <h1>Produtos</h1>
-      { products.length > 0 && products.map((product) => (<ProductsCard
+      { products.length > 0 && products.map((product, index) => (<ProductsCard
         product={ product }
+        index={ index }
         key={ product.id }
       />))}
       <CheckoutButton />
-    </CartProvider>
+    </>
   );
 }
 
