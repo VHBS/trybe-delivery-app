@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import useCart from '../hooks/useCart';
 
 function ProductsCard({ product }) {
@@ -36,7 +36,7 @@ function ProductsCard({ product }) {
         type="button"
         value="add-btn"
         data-testid={ `customer_products__button-card-add-item-${product.id}` }
-        onClick={ () => setQuantity((prev) => changeQuantity(Number(prev) + 1)) }
+        onClick={ () => changeQuantity(quantity + 1) }
       >
         +
       </button>
