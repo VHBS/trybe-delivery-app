@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import useCart from '../hooks/useCart';
 
 function ProductsCard({ product }) {
   const [quantity, setQuantity] = useState(0);
+  const { handleCheckCartProducts } = useCart();
+
+  const changeQuantity = (value) => {
+    handleCheckCartProducts(product, value);
+    setQuantity(value);
+  };
 
   const handleRemoveQuantity = () => {
     if (quantity === 0) {
       return;
     }
-    setQuantity((prev) => Number(prev) - 1);
+    setQuantity((prev) => changeQuantity(Number(prev) - 1));
   };
 
   return (
@@ -29,7 +36,7 @@ function ProductsCard({ product }) {
         type="button"
         value="add-btn"
         data-testid={ `customer_products__button-card-add-item-${product.id}` }
-        onClick={ () => setQuantity((prev) => Number(prev) + 1) }
+        onClick={ () => setQuantity((prev) => changeQuantity(Number(prev) + 1)) }
       >
         +
       </button>
@@ -38,7 +45,7 @@ function ProductsCard({ product }) {
         min="0"
         data-testid={ `customer_products__input-card-quantity-${product.id}` }
         value={ quantity }
-        onChange={ ({ target: { value } }) => setQuantity(Number(value)) }
+        onChange={ ({ target: { value } }) => changeQuantity(Number(value)) }
       />
       <button
         type="button"
