@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import useProducts from '../hooks/useProducts';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function ProductsCard() {
-  const { handleProducts, products } = useProducts();
-  useEffect(() => {
-    try {
-      handleProducts();
-    } catch (error) {
-      throw new Error(error);
+function ProductsCard({ product }) {
+  const [quantity, setQuantity] = useState(0);
+
+  const handleRemoveQuantity = () => {
+    if (quantity === 0) {
+      return;
     }
-  }, [handleProducts]);
+    setQuantity(quantity - 1);
+  };
 
-  const productsMap = products.map((product) => (
-    <div key={ product.id }>
+  return (
+    <div>
       <h3 data-testid={ `customer_products__element-card-title-${product.id}` }>
         {product.name}
       </h3>
@@ -30,6 +29,7 @@ function ProductsCard() {
         type="button"
         value="add-btn"
         data-testid={ `customer_products__button-card-add-item-${product.id}` }
+        onClick={ () => setQuantity(quantity + 1) }
       >
         +
       </button>
@@ -37,25 +37,28 @@ function ProductsCard() {
         type="number"
         min="0"
         data-testid={ `customer_products__input-card-quantity-${product.id}` }
-        value="0"
+        value={ quantity }
+        onChange={ ({ target: { value } }) => setQuantity(value) }
       />
       <button
         type="button"
         value="rm-btn"
         data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+        onClick={ handleRemoveQuantity }
       >
         -
       </button>
     </div>
-  ));
-
-  return (
-    <>
-      <h1>lista todos os produtos</h1>
-      {!products ? null : <ul>{productsMap}</ul>}
-      <Link to="customer/checkout" />
-    </>
   );
 }
 
 export default ProductsCard;
+
+ProductsCard.propTypes = {
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.string,
+    id: PropTypes.number,
+    urlImage: PropTypes.string,
+  }).isRequired,
+};
