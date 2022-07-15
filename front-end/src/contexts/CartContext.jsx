@@ -1,5 +1,5 @@
-import React, { createContext, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import React, { createContext, useCallback, useState } from 'react';
 
 const CartContext = createContext({});
 
@@ -31,7 +31,6 @@ function CartProvider({ children }) {
   const handleRemoveProduct = useCallback((productToRemove) => {
     const { id } = productToRemove;
     const updatedProducts = productsCart.filter((productCart) => productCart.id !== id);
-    console.log(updatedProducts);
     setProductsCart(updatedProducts);
   }, [productsCart]);
 
