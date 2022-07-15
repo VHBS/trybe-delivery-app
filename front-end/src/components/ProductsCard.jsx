@@ -8,7 +8,7 @@ function ProductsCard({ product }) {
     if (quantity === 0) {
       return;
     }
-    setQuantity(quantity - 1);
+    setQuantity((prev) => Number(prev) - 1);
   };
 
   return (
@@ -29,7 +29,7 @@ function ProductsCard({ product }) {
         type="button"
         value="add-btn"
         data-testid={ `customer_products__button-card-add-item-${product.id}` }
-        onClick={ () => setQuantity(quantity + 1) }
+        onClick={ () => setQuantity((prev) => Number(prev) + 1) }
       >
         +
       </button>
@@ -38,7 +38,7 @@ function ProductsCard({ product }) {
         min="0"
         data-testid={ `customer_products__input-card-quantity-${product.id}` }
         value={ quantity }
-        onChange={ ({ target: { value } }) => setQuantity(value) }
+        onChange={ ({ target: { value } }) => setQuantity(Number(value)) }
       />
       <button
         type="button"
