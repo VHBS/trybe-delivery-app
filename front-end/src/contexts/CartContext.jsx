@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const CartContext = createContext({});
@@ -6,9 +6,8 @@ const CartContext = createContext({});
 function CartProvider({ children }) {
   const [productsCart, setProductsCart] = useState([]);
 
-  async function handleAddQuantityProduct(productUpdated, quantity) {
+  const handleAddQuantityProduct = useCallback((productUpdated, quantity) => {
     const { id } = productUpdated;
-
     const updatedProducts = productsCart.map((productCart) => {
       if (productCart.id === id) {
         const updatedProduct = {
@@ -21,24 +20,22 @@ function CartProvider({ children }) {
       return productCart;
     });
     setProductsCart(updatedProducts);
-  }
+  }, [productsCart]);
 
-  async function handleAddProduct(productAdded, quantity) {
+  const handleAddProduct = useCallback((productAdded, quantity) => {
     const { id, name, price } = productAdded;
     const subTotal = price * quantity;
     setProductsCart((prev) => [...prev, { id, name, price, quantity, subTotal }]);
-  }
+  }, []);
 
-  async function handleRemoveProduct(productToRemove) {
+  const handleRemoveProduct = useCallback((productToRemove) => {
     const { id } = productToRemove;
-
     const updatedProducts = productsCart.filter((productCart) => productCart.id !== id);
     console.log(updatedProducts);
     setProductsCart(updatedProducts);
-  }
+  }, [productsCart]);
 
-  async function handleCheckCartProducts(product, quantity) {
-    console.log(quantity);
+  const handleCheckCartProducts = useCallback((product, quantity) => {
     const productsInCart = productsCart
       .some((productCart) => productCart.id === product.id);
 
@@ -48,7 +45,7 @@ function CartProvider({ children }) {
     }
 
     return handleAddProduct(product, quantity);
-  }
+  }, [handleAddQuantityProduct, handleRemoveProduct, handleAddProduct, productsCart]);
 
   return (
     <CartContext.Provider
