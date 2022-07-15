@@ -16,6 +16,7 @@ function ClientNavBar() {
         <button
           data-testid="customer_products__element-navbar-link-products"
           type="button"
+          onClick={ () => navigate('/customer/products') }
         >
           Produtos
 
@@ -24,6 +25,7 @@ function ClientNavBar() {
         <button
           data-testid="customer_products__element-navbar-link-orders"
           type="button"
+          onClick={ () => navigate('/customer/orders') }
         >
           Meus Pedidos
         </button>
