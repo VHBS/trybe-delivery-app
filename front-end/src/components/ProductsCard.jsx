@@ -1,10 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCart from '../hooks/useCart';
 
 function ProductsCard({ product }) {
   const [quantity, setQuantity] = useState(0);
-  const { handleCheckCartProducts } = useCart();
+  const { handleCheckCartProducts, productsCart } = useCart();
+
+  useEffect(() => {
+    productsCart.map((productCart) => {
+      if (productCart.id === product.id) return setQuantity(productCart.quantity);
+      return productCart;
+    });
+  });
 
   const changeQuantity = (value) => {
     handleCheckCartProducts(product, value);
