@@ -47,5 +47,20 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
     timestamps: false,
   });
+
+  sales.associate = (models) => {
+    sales.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
+    sales.belongsTo(models.User, {
+      foreignKey: 'sellerId',
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+  }
+
   return sales;
 };
