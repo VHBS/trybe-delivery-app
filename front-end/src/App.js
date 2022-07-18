@@ -11,24 +11,36 @@ import Register from './pages/Register/Register';
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route exact path="/" element={ <Navigate to="/login" /> } />
-        <Route path="login" element={ <Login /> } />
-        <Route path="register" element={ <Register /> } />
-        <Route path="customer/orders" element={ <Orders /> } />
-        <Route path="customer/orders/:id" element={ <h1>order</h1> } />
-      </Routes>
-      <CartProvider>
-        <Routes>
-          <Route path="customer/products" element={ <Products /> } />
-          <Route
-            path="customer/checkout"
-            element={ <Checkout /> }
-          />
-        </Routes>
-      </CartProvider>
-    </>
+    <Routes>
+      <Route exact path="/" element={ <Navigate to="/login" /> } />
+      <Route path="login" element={ <Login /> } />
+      <Route path="register" element={ <Register /> } />
+      <Route
+        path="customer/orders"
+        element={
+          <CartProvider>
+            <Orders />
+          </CartProvider>
+        }
+      />
+      <Route path="customer/orders/:id" element={ <h1>order</h1> } />
+      <Route
+        path="customer/products"
+        element={
+          <CartProvider>
+            <Products />
+          </CartProvider>
+        }
+      />
+      <Route
+        path="customer/checkout"
+        element={
+          <CartProvider>
+            <Checkout />
+          </CartProvider>
+        }
+      />
+    </Routes>
   );
 }
 
