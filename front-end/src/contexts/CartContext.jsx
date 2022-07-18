@@ -1,10 +1,20 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 const CartContext = createContext({});
 
 function CartProvider({ children }) {
   const [productsCart, setProductsCart] = useState([]);
+  const [totalCartValue, setTotalCartValue] = useState(0);
+
+  useEffect(() => {
+    const totalValue = productsCart.reduce((acc, curr) => {
+      acc += curr.price * curr.quantity;
+      return acc;
+    }, 0);
+
+    setTotalCartValue(totalValue);
+  }, [productsCart]);
 
   const handleAddQuantityProduct = useCallback((productUpdated, quantity) => {
     const { id } = productUpdated;
@@ -46,13 +56,22 @@ function CartProvider({ children }) {
     return handleAddProduct(product, quantity);
   }, [handleAddQuantityProduct, handleRemoveProduct, handleAddProduct, productsCart]);
 
+  // const teste = useCallback((product) => {
+  //   console.log(product);
+  // }, []);
+
   return (
     <CartContext.Provider
       value={ {
         handleCheckCartProducts,
         handleAddProduct,
         handleAddQuantityProduct,
-        productsCart } }
+        handleRemoveProduct,
+        // teste,
+        productsCart,
+        totalCartValue,
+        setTotalCartValue,
+      } }
     >
       { children}
     </CartContext.Provider>
