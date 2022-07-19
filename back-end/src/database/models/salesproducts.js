@@ -10,11 +10,19 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.INTEGER,
+      references: {
+        model: 'sales',
+        key: 'id'
+      }
     },
     productId: {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.INTEGER,
+      references: {
+        model: 'products',
+        key: 'id'
+      }
     },
     quantity: {
       allowNull: false,
@@ -33,8 +41,9 @@ module.exports = (sequelize, DataTypes) => {
       models.Product,
       {
         as: 'products',
+        through: salesProducts,
         foreignKey: 'saleId',
-        through: salesProducts
+        otherKey: 'productId',
       }
     )
 
@@ -42,8 +51,9 @@ module.exports = (sequelize, DataTypes) => {
       models.Sale,
       {
         as: 'sales',
-        foreignKey: 'productId',
         through: salesProducts,
+        foreignKey: 'productId',
+        otherKey: 'saleId',
       }
     )
   }
