@@ -1,41 +1,45 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import useCart from '../hooks/useCart';
 
 export default function ProductsCheckout({ product, index }) {
+  const { handleRemoveProduct } = useCart();
+
   return (
-    <div>
-      {index + 1}
-      <span
+    <tr>
+      <td data-testid={ `customer_checkout__element-order-table-item-number-${index}` }>
+        {index + 1}
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-name-${index}` }
       >
         {product.name}
-      </span>
-      <span
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
       >
         {product.quantity}
-      </span>
-      <span
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
       >
-        {product.price}
-        valor unitario
-      </span>
-      <span
+        {Number(product.price).toFixed(2).replace(/\./, ',')}
+      </td>
+      <td
         data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
       >
-        {product.subTotal}
-        subtotal
-      </span>
-      <span>
+        {Number(product.subTotal).toFixed(2).replace(/\./, ',')}
+      </td>
+      <td>
         <button
           type="button"
           data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+          onClick={ () => handleRemoveProduct(product) }
         >
           remover
         </button>
-      </span>
-    </div>
+      </td>
+    </tr>
   );
 }
 

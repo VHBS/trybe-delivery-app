@@ -1,5 +1,5 @@
-import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { createContext, useState } from 'react';
 import api from '../services/api';
 
 const AuthContext = createContext({});
@@ -19,7 +19,7 @@ function AuthProvider({ children }) {
   }
 
   async function handleRegister(name, email, password) {
-    const { data } = await api.post('/register', {
+    const { data } = await api.post('/users', {
       name,
       email,
       password,
