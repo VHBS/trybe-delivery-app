@@ -1,3 +1,5 @@
+const jwtFactory = require('../../../../utils/jwt/jwtFactory');
+
 class CreateSale {
   constructor(salesRepository, salesProductsRepository) {
     this.salesRepository = salesRepository;
@@ -6,14 +8,16 @@ class CreateSale {
     this.execute = this.execute.bind(this);
   }
 
-  async execute({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products }) {
+  async execute({ authorization },
+    { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products }) {
+    jwtFactory().verify(authorization);
     const sale = await this.salesRepository.create({
       userId,
       sellerId,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
-      status: 'pending',
+      status: 'Pendente',
     });
 
     await Promise.all(

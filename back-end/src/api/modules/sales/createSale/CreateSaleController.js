@@ -4,16 +4,12 @@ class CreateSaleController {
   }
 
   async handle(req, res) {
-    const {
-      userId,
-      sellerId,
-      totalPrice,
-      deliveryAddress,
-      deliveryNumber,
-      products,
-    } = req.body;
-
-    const sale = await this.createSale.execute({
+    try {
+      const {
+        userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products,
+      } = req.body;
+      const { authorization } = req.headers;
+        const sale = await this.createSale.execute({ authorization }, {
       userId,
       sellerId,
       totalPrice,
@@ -21,8 +17,10 @@ class CreateSaleController {
       deliveryNumber,
       products,
     });
-
     return res.status(201).json(sale);
+  } catch (error) {
+    return res.status(500).json({ message: 'Server internal error' });
+  }
   }
 }
 
