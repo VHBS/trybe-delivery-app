@@ -10,21 +10,55 @@ export default function Checkout() {
   const { productsCart, totalCartValue } = useCart();
   const [sellers, setSellers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState('');
+  const [address, setAdress] = useState('');
+  const [addressNumber, setAdressNumber] = useState(0);
+  const [addressIsEmpty, setAddressIsEmpty] = useState(false);
+  const [cartIsEmpty, setCartIsEmpty] = useState(false);
+  // const [cartDone, setCartDone] = useState(false);
+  const THREESECONDS = 3000;
 
   const handleSellers = useCallback(async () => {
     const { data } = await api.get('/users/sellers');
-    console.log(data);
     setSellers(data);
-    setSelectedSeller(data[0].name);
+    setSelectedSeller(data[0].id);
   }, []);
 
   useEffect(() => {
     handleSellers();
-  }, [setSellers, handleSellers]);
+  }, [setSellers, handleSellers, addressNumber]);
+
+  async function handleSendOrder(body) {
+    const { data } = await api.post('/sales', body);
+    console.log(data);
+    setTimeout(() => {
+      navigate(`/customer/orders/${data.id}`);
+    }, THREESECONDS);
+  }
+
+  function handleCheckOrder(body) {
+    if (body.totalPrice === 0 || body.products.length === 0) {
+      return setCartIsEmpty(true);
+    }
+    if (
+      body.deliveryAddress === undefined
+      || body.deliveryAddress === '' || body.deliveryNumber === 0) {
+      return setAddressIsEmpty(true);
+    }
+    return handleSendOrder(body);
+  }
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   async function handleFinalizePurchase() {
-    console.log(selectedSeller);
-    navigate(`/customer/orders/${selectedSeller.id}`);
+    const saleBody = {
+      userId: user.id,
+      sellerId: selectedSeller,
+      totalPrice: totalCartValue,
+      deliveryAddress: address,
+      deliveryNumber: addressNumber,
+      products: productsCart,
+    };
+    handleCheckOrder(saleBody);
   }
 
   return (
@@ -76,7 +110,7 @@ export default function Checkout() {
         {sellers && sellers.map((seller) => (
           <option
             key={ seller.id }
-            value={ seller.name }
+            value={ seller.id }
           >
             {seller.name}
           </option>))}
@@ -85,20 +119,25 @@ export default function Checkout() {
         type="text"
         name="adress"
         placeholder="endereço"
+        value={ address }
+        onChange={ (e) => setAdress(e.target.value) }
         data-testid="customer_checkout__input-address"
       />
       <input
         type="number"
         name="addressNumber"
-        id=""
         placeholder="123"
         min={ 0 }
+        value={ addressNumber }
+        onInput={ (e) => setAdressNumber(Number(e.target.value)) }
+        onChange={ (e) => setAdressNumber(Number(e.target.value)) }
         data-testid="customer_checkout__input-addressNumber"
       />
+      {addressIsEmpty && <p>preecha o endereço corretamente</p>}
+      {cartIsEmpty && <p>adicione produtos no carrinho</p>}
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
-        // TODO: metodo post na api e retornar o id da venda
         onClick={ handleFinalizePurchase }
       >
         Finalizar Pedido
