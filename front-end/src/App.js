@@ -5,6 +5,7 @@ import './App.css';
 import { CartProvider } from './contexts/CartContext';
 import Checkout from './pages/Checkout/Checkout';
 import Login from './pages/Login/login';
+import OrderDetails from './pages/Orders/OrderDetails';
 import Orders from './pages/Orders/Orders';
 import Products from './pages/Products/Products';
 import Register from './pages/Register/Register';
@@ -23,7 +24,6 @@ function App() {
           </CartProvider>
         }
       />
-      <Route path="customer/orders/:id" element={ <h1>order</h1> } />
       <Route
         path="customer/products"
         element={
@@ -37,6 +37,14 @@ function App() {
         element={
           <CartProvider>
             <Checkout />
+          </CartProvider>
+        }
+      />
+      <Route
+        path="/customer/orders/:id"
+        element={
+          <CartProvider>
+            <OrderDetails />
           </CartProvider>
         }
       />
