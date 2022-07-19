@@ -28,18 +28,24 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  salesProducts.associations = (models) => {
-    models.Sale.belongsToMany(models.Product, {
-      as: 'sales',
-      foreignKey: 'saleId',
-      through: salesProducts,
-    })
+  salesProducts.associate = (models) => {
+    models.Sale.belongsToMany(
+      models.Product,
+      {
+        as: 'products',
+        foreignKey: 'saleId',
+        through: salesProducts
+      }
+    )
 
-    models.Product.belongsToMany(models.Sale, {
-      as: 'products',
-      foreignKey: 'productId',
-      through: salesProducts,
-    })
+    models.Product.belongsToMany(
+      models.Sale,
+      {
+        as: 'sales',
+        foreignKey: 'productId',
+        through: salesProducts,
+      }
+    )
   }
 
   return salesProducts;
