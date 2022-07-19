@@ -1,5 +1,3 @@
-const { SaleProduct } = require('../../../../database/models');
-
 class GetSaleById {
   constructor(salesRepository, productsRepository) {
     this.salesRepository = salesRepository;
@@ -16,10 +14,6 @@ class GetSaleById {
           model: this.productsRepository,
           as: 'products',
         },
-        // {
-        //   model: this.salesRepository,
-        //   as: 'sales',
-        // },
       ],
     });
     return saleWithProducts;
