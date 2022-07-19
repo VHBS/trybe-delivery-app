@@ -17,6 +17,8 @@ export default function Checkout() {
   // const [cartDone, setCartDone] = useState(false);
   const THREESECONDS = 3000;
 
+  const user = JSON.parse(localStorage.getItem('user'));
+
   const handleSellers = useCallback(async () => {
     const { data } = await api.get('/users/sellers');
     setSellers(data);
@@ -28,7 +30,8 @@ export default function Checkout() {
   }, [setSellers, handleSellers, addressNumber]);
 
   async function handleSendOrder(body) {
-    const { data } = await api.post('/sales', body);
+    const { data } = await api.post('/sales', body,
+      { headers: { authorization: user.token } });
     console.log(data);
     setTimeout(() => {
       navigate(`/customer/orders/${data.id}`);
@@ -46,8 +49,6 @@ export default function Checkout() {
     }
     return handleSendOrder(body);
   }
-
-  const user = JSON.parse(localStorage.getItem('user'));
 
   async function handleFinalizePurchase() {
     const saleBody = {
