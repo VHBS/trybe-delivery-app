@@ -28,7 +28,12 @@ function Login() {
   async function setLocalStorage() {
     try {
       await handleLogin(email, password);
-      navigate('/customer/products');
+      const { role } = (JSON.parse(localStorage.getItem('user')));
+      if (role === 'seller') {
+        navigate('/seller/orders');
+      } else if (role === 'customer') {
+        navigate('/customer/products');
+      }
     } catch (error) {
       console.log(error.response.data.message);
     }
