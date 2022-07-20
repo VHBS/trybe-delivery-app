@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import ClientNavBar from './components/NavBar';
 import { CartProvider } from './contexts/CartContext';
 import Checkout from './pages/Checkout/Checkout';
 import Login from './pages/Login/login';
@@ -10,6 +9,8 @@ import OrderDetails from './pages/Orders/OrderDetails';
 import Orders from './pages/Orders/Orders';
 import Products from './pages/Products/Products';
 import Register from './pages/Register/Register';
+import SaleDetails from './pages/Seller/SaleDetails';
+import SellerOrders from './pages/Seller/SellerOrders';
 
 function App() {
   return (
@@ -49,7 +50,8 @@ function App() {
           </CartProvider>
         }
       />
-      <Route path="/seller/orders" element={ <ClientNavBar /> } />
+      <Route path="/seller/orders" element={ <SellerOrders /> } />
+      <Route path="/seller/orders/:id" element={ <SaleDetails /> } />
       <Route path="*" element={ <p>Page not found</p> } />
     </Routes>
   );
