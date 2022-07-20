@@ -14,24 +14,26 @@ function OrderDetails() {
   const newDate = new Date(sale.saleDate);
   const saleDate = (`
   ${newDate.getDate()}/0${newDate.getMonth() + 1}/${newDate.getFullYear()}`);
+
+  const selectSellerOrder = (saleOrder, sellers) => {
+    const selerOrder = sellers.find((selerItem) => saleOrder.sellerId === selerItem.id);
+
+    setSaler(selerOrder.name);
+  };
+
   const handleGetOrder = useCallback(async () => {
     const { data } = await api.get(`/sales/${id}`);
+    const { data: dataSeller } = await api.get('/users/sellers');
+
+    selectSellerOrder(data, dataSeller);
     setSale(data);
     setTotalPrice(data.totalPrice.replace(/\./, ','));
     setProducts(data.products);
   }, [id]);
+
   useEffect(() => {
     handleGetOrder();
   }, [handleGetOrder]);
-
-  // TODO: fazer get saller by id, ou comparar dentro do array
-  const handleGetSellers = useCallback(async () => {
-    const { data } = await api.get('/users/sellers');
-    setSaler(data[0].name);
-  }, []);
-  useEffect(() => {
-    handleGetSellers();
-  }, [handleGetSellers]);
 
   return (
     <div>
