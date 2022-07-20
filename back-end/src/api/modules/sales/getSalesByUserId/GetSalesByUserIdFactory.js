@@ -5,8 +5,8 @@ const GetSaleByUserId = require('./GetSalesByUserId');
 module.exports = function getSalesByUserIdFactory() {
   const salesRepository = Sale;
   const productsRepository = Product;
-  const getSaleById = new GetSaleByUserId(salesRepository, productsRepository);
-  const getSaleByIdController = new GetSaleByUserIdController(getSaleById);
+  const getSaleByUserId = new GetSaleByUserId(salesRepository, productsRepository);
+  const getSaleByUserIdController = new GetSaleByUserIdController(getSaleByUserId);
 
-  return getSaleByIdController;
+  return getSaleByUserIdController;
 };
