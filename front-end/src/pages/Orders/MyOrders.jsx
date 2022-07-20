@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function MyOrders({ pedido, status, date, totalPrice }) {
+function MyOrders({
+  pedido = 1,
+  status = 'Pendente', date = '2022-07-20T16:52:33.525Z', totalPrice = '9,70' }) {
   return (
-    <Link to={ `/${pedido}` }>
+    <Link to={ `/customer/orders/${pedido}` }>
       <div>
         <p data-testid={ `customer_orders__element-order-id-${pedido}` }>{pedido}</p>
         <p

@@ -19,6 +19,7 @@ function Orders() {
     <>
       <ClientNavBar />
       <h1>orders</h1>
+      <MyOrders />
       {orders.map((order, index) => (
         <MyOrders
           key={ index }
