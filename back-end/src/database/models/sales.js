@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     saleDate: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW
     },
     status: {
