@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useNavigationType } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 function Login() {
@@ -8,6 +8,14 @@ function Login() {
   const [password, setPassword] = useState('');
   const [loginValidated, setValid] = useState(false);
   const { handleLogin } = useAuth();
+  const navigationType = useNavigationType();
+
+  useEffect(() => {
+    if (navigationType === 'POP') {
+      localStorage.clear();
+    }
+    console.log(navigationType);
+  }, [navigationType]);
 
   function emailValidated() {
     const regex = /\S+@\S+\.\S+/;
@@ -28,7 +36,15 @@ function Login() {
   async function setLocalStorage() {
     try {
       await handleLogin(email, password);
-      navigate('/customer/products');
+      const { role } = JSON.parse(localStorage.getItem('user'));
+      const ONESECOND = 1000;
+      setTimeout(() => {
+        if (role === 'seller') {
+          navigate('/seller/orders');
+        } else if (role === 'customer') {
+          navigate('/customer/products');
+        }
+      }, ONESECOND);
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -82,6 +98,8 @@ function Login() {
       <p data-testid="common_login__element-invalid-email">
         { !loginValidated && 'E-mail ou senha incorretos' }
       </p>
+      {localStorage.getItem('user')
+      && <p>Login com sucesso, você será redirecionado...</p>}
     </div>
   );
 }
