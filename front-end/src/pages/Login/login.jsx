@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
@@ -38,6 +38,17 @@ function Login() {
       console.log(error.response.data.message);
     }
   }
+
+  useEffect(() => {
+    if ((localStorage.getItem('user'))) {
+      const { role } = (JSON.parse(localStorage.getItem('user')));
+      if (role === 'seller') {
+        navigate('/seller/orders');
+      } else if (role === 'customer') {
+        navigate('/customer/products');
+      }
+    }
+  }, [navigate]);
 
   return (
     <div>

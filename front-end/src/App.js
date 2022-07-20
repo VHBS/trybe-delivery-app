@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import ClientNavBar from './components/NavBar';
 import { CartProvider } from './contexts/CartContext';
 import Checkout from './pages/Checkout/Checkout';
 import Login from './pages/Login/login';
@@ -48,6 +49,7 @@ function App() {
           </CartProvider>
         }
       />
+      <Route path="/seller/orders" element={ <ClientNavBar /> } />
       <Route path="*" element={ <p>Page not found</p> } />
     </Routes>
   );
