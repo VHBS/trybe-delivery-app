@@ -48,6 +48,7 @@ function App() {
           </CartProvider>
         }
       />
+      <Route path="*" element={ <p>Page not found</p> } />
     </Routes>
   );
 }

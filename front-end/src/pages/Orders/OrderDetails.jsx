@@ -7,17 +7,18 @@ import api from '../../services/api';
 function OrderDetails() {
   const [products, setProducts] = useState([]);
   const [sale, setSale] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
   const CUSTOMER = 'customer_order_details__element-order';
   const { id } = useParams();
   const newDate = new Date(sale.saleDate);
-  const saleDate = (`${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()}`);
+  const saleDate = (`
+  ${newDate.getDate()}/0${newDate.getMonth() + 1}/${newDate.getFullYear()}`);
   const handleGetOrder = useCallback(async () => {
     const { data } = await api.get(`/sales/${id}`);
-    console.log(data);
     setSale(data);
+    setTotalPrice(data.totalPrice.replace(/\./, ','));
     setProducts(data.products);
   }, [id]);
-
   useEffect(() => {
     handleGetOrder();
   }, [handleGetOrder]);
@@ -37,8 +38,7 @@ function OrderDetails() {
             <td
               data-testid={ `${CUSTOMER}-details-label-seller-name` }
             >
-              {/* {data.} */}
-              seller name
+              Fulana Pereira
             </td>
             <td
               data-testid={ `${CUSTOMER}-details-label-order-date` }
@@ -65,16 +65,17 @@ function OrderDetails() {
           ))}
         </tbody>
       </table>
-      <p
+      <button
+        type="button"
+        disabled
         data-testid="customer_order_details__button-delivery-check"
       >
         Marcar como entregue
-      </p>
+      </button>
       <p
-        data-testid="customer_order_details__element-order-total-price-"
+        data-testid="customer_order_details__element-order-total-price"
       >
-        {/* TODO: calcular o total do pedido */}
-        total: R$
+        {totalPrice}
       </p>
     </div>
   );
