@@ -7,6 +7,7 @@ import api from '../../services/api';
 function OrderDetails() {
   const [products, setProducts] = useState([]);
   const [sale, setSale] = useState({});
+  const [saler, setSaler] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const CUSTOMER = 'customer_order_details__element-order';
   const { id } = useParams();
@@ -23,6 +24,15 @@ function OrderDetails() {
     handleGetOrder();
   }, [handleGetOrder]);
 
+  // TODO: fazer get saller by id, ou comparar dentro do array
+  const handleGetSellers = useCallback(async () => {
+    const { data } = await api.get('/users/sellers');
+    setSaler(data[0].name);
+  }, []);
+  useEffect(() => {
+    handleGetSellers();
+  }, [handleGetSellers]);
+
   return (
     <div>
       <ClientNavBar />
@@ -38,7 +48,7 @@ function OrderDetails() {
             <td
               data-testid={ `${CUSTOMER}-details-label-seller-name` }
             >
-              Fulana Pereira
+              {saler}
             </td>
             <td
               data-testid={ `${CUSTOMER}-details-label-order-date` }
@@ -67,7 +77,7 @@ function OrderDetails() {
       </table>
       <button
         type="button"
-        disabled
+        disabled={ sale.status !== 'Entregue' }
         data-testid="customer_order_details__button-delivery-check"
       >
         Marcar como entregue
