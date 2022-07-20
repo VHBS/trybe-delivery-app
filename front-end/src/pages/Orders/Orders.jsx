@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import MyOrders from '../../components/MyOrders';
 import ClientNavBar from '../../components/NavBar';
 import api from '../../services/api';
-import MyOrders from './MyOrders';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
 
   const handleGetOrders = useCallback(async () => {
-    const { data } = await api.get('/sales');
+    const { id } = (JSON.parse(localStorage.getItem('user')));
+    const { data } = await api.get(`/sales/user/${id}`);
     setOrders(data);
   }, []);
 
@@ -18,15 +19,14 @@ function Orders() {
   return (
     <>
       <ClientNavBar />
-      <h1>orders</h1>
-      <MyOrders />
       {orders.map((order, index) => (
         <MyOrders
           key={ index }
           pedido={ index }
           status={ order.status }
-          date={ order.date }
-          totalPrice={ order.totalPrice }
+          date={ order.saleDate }
+          total={ order.totalPrice }
+          id={ order.id }
         />
       ))}
     </>
