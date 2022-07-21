@@ -8,4 +8,4 @@ module.exports = function updateSaleFactory() {
   const updateSaleController = new UpdateSaleController(updateSale);
 
   return updateSaleController;
-}
+};
