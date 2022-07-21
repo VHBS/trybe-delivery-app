@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ClientNavBar from '../../components/NavBar';
-import SellerDetailsCard from '../../components/SellerDetailsCard';
+import SellerOrdersCard from '../../components/SellerOrdersCard';
 import api from '../../services/api';
 
 function SellerOrders() {
@@ -20,7 +20,7 @@ function SellerOrders() {
       <ClientNavBar />
       <h1>saler page</h1>
       {sales.map((sale, index) => (
-        <SellerDetailsCard
+        <SellerOrdersCard
           key={ index }
           id={ sale.id }
           pedido={ index }

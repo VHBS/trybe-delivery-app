@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function SellerDetailsCard({
+function SellerOrdersCard({
   id, pedido, status, date, totalPrice, deliveryAddress, deliveryNumber }) {
   return (
     <Link to={ `${id}` }>
@@ -13,11 +13,12 @@ function SellerDetailsCard({
             `seller_orders__element-order-id-${pedido + 1}`
           }
         >
+          Pedido
           {pedido + 1}
         </h1>
         <h1
           data-testid={
-            `seller_orders__element-delivery-status-${pedido + 1}`
+            `seller_orders__element-delivery-status-${id}`
           }
         >
           {status}
@@ -48,7 +49,7 @@ function SellerDetailsCard({
   );
 }
 
-SellerDetailsCard.propTypes = {
+SellerOrdersCard.propTypes = {
   id: PropTypes.number.isRequired,
   pedido: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
@@ -58,4 +59,4 @@ SellerDetailsCard.propTypes = {
   deliveryNumber: PropTypes.string.isRequired,
 };
 
-export default SellerDetailsCard;
+export default SellerOrdersCard;
