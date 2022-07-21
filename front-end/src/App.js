@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import './App.css';
 import { CartProvider } from './contexts/CartContext';
+import Admin from './pages/Admin/Admin';
 import Checkout from './pages/Checkout/Checkout';
 import Login from './pages/Login/login';
 import OrderDetails from './pages/Orders/OrderDetails';
@@ -52,6 +53,7 @@ function App() {
       />
       <Route path="/seller/orders" element={ <SellerOrders /> } />
       <Route path="/seller/orders/:id" element={ <SaleDetails /> } />
+      <Route path="admin/manage" element={ <Admin /> } />
       <Route path="*" element={ <p>Page not found</p> } />
     </Routes>
   );

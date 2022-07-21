@@ -33,6 +33,8 @@ function Login() {
         navigate('/seller/orders');
       } else if (role === 'customer') {
         navigate('/customer/products');
+      } else if (role === 'administrator') {
+        navigate('/admin/manage');
       }
     } catch (error) {
       console.log(error.response.data.message);
